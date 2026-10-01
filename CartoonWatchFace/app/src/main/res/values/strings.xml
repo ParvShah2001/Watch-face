@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">Cartoon Watch face</string>
+    <string name="watch_face_name">Cartoon</string>
+
+    <!-- Color Theme Strings -->
+    <string name="color_theme_title">Color Theme</string>
+    <string name="color_amber">Amber</string>
+    <string name="color_lime">Lime</string>
+    <string name="color_coral">Coral</string>
+    <string name="color_teal">Teal</string>
+    <string name="color_lavender">Lavender</string>
+    <string name="color_mint">Mint</string>
+    <string name="color_white">Classic White</string>
+
+    <!-- Cartoon Character Strings -->
+    <string name="character_setting_title">Cartoon Character</string>
+    <string name="character_mickey">Mickey Mouse</string>
+    <string name="character_doraemon">Doraemon</string>
+    <string name="character_shinchan">Shin-chan</string>
+    <string name="character_pikachu">Pikachu</string>
+    <string name="character_goku">Goku</string>
+    <string name="character_oggy">Oggy</string>
+
+    <!-- Complication Slot Names -->
+    <string name="complication_top_left_name">Top Left (Battery / Health)</string>
+    <string name="complication_top_right_name">Top Right (Date / Calendar)</string>
+    <string name="complication_mid_left_name">Side Left (Steps / Fitness)</string>
+    <string name="complication_mid_right_name">Side Right (Weather / Activity)</string>
+    <!-- Settings -->
+    <string name="setting_show_seconds">Seconds Hand Dot</string>
+</resources>

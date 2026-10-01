@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Mandatory Wear OS device feature declaration -->
+    <uses-feature android:name="android.hardware.type.watch" />
+
+    <application
+        android:hasCode="false"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/watch_face_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true">
+
+        <property
+            android:name="com.google.wear.watchface.format.version"
+            android:value="2" />
+
+        <meta-data
+            android:name="com.google.android.wearable.watchface.preview"
+            android:resource="@drawable/watch_preview" />
+        <meta-data
+            android:name="com.google.android.wearable.watchface.preview_circular"
+            android:resource="@drawable/watch_preview" />
+        <meta-data
+            android:name="com.google.android.wearable.standalone"
+            android:value="true" />
+
+    </application>
+
+</manifest>

@@ -1,0 +1,794 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WatchFace width="450" height="450" clipShape="CIRCLE">
+    <Metadata key="CLOCK_TYPE" value="DIGITAL" />
+    <Metadata key="PREVIEW_TIME" value="10:08:32" />
+
+    <UserConfigurations>
+        <!-- Color Theme Customization -->
+        <ColorConfiguration id="themeColor" displayName="@string/color_theme_title" defaultValue="amber">
+            <ColorOption id="amber" displayName="@string/color_amber" colors="#FFFFA726 #FFFFCC80" />
+            <ColorOption id="lime" displayName="@string/color_lime" colors="#FFD4E157 #FFE6EE9C" />
+            <ColorOption id="coral" displayName="@string/color_coral" colors="#FFFF7043 #FFFFAB91" />
+            <ColorOption id="teal" displayName="@string/color_teal" colors="#FF26A69A #FF80CBC4" />
+            <ColorOption id="lavender" displayName="@string/color_lavender" colors="#FFAB47BC #FFCE93D8" />
+            <ColorOption id="mint" displayName="@string/color_mint" colors="#FF66BB6A #FFA5D6A7" />
+            <ColorOption id="white" displayName="@string/color_white" colors="#FFE0E0E0 #FF9E9E9E" />
+        </ColorConfiguration>
+
+        <!-- Cartoon Character Customization (6 Iconic Classics) -->
+        <ListConfiguration id="character" displayName="@string/character_setting_title" defaultValue="0">
+            <ListOption id="0" displayName="@string/character_mickey" />
+            <ListOption id="1" displayName="@string/character_doraemon" />
+            <ListOption id="2" displayName="@string/character_shinchan" />
+            <ListOption id="3" displayName="@string/character_pikachu" />
+            <ListOption id="4" displayName="@string/character_goku" />
+            <ListOption id="5" displayName="@string/character_oggy" />
+        </ListConfiguration>
+
+        <!-- Seconds Hand Dot Toggle Option -->
+        <BooleanConfiguration id="showSeconds" displayName="@string/setting_show_seconds" defaultValue="TRUE" />
+    </UserConfigurations>
+
+    <Scene backgroundColor="#FF000000">
+
+        <!-- Outer Watch Bezel Dial (Bold & Thick Ticks) -->
+        <PartImage x="0" y="0" width="450" height="450">
+            <Variant mode="AMBIENT" target="alpha" value="0" />
+            <Image resource="dial_bezel" />
+        </PartImage>
+
+        <!-- Complication Slot 1: Top Left (45 deg, Reduced PCD = 276, Zero Overlap with Hands) -->
+        <ComplicationSlot
+            slotId="1"
+            x="88"
+            y="88"
+            width="78"
+            height="78"
+            supportedTypes="RANGED_VALUE SHORT_TEXT SMALL_IMAGE EMPTY">
+            <BoundingOval x="0" y="0" width="78" height="78" />
+            <DefaultProviderPolicy defaultSystemProvider="WATCH_BATTERY" defaultSystemProviderType="RANGED_VALUE" />
+
+            <!-- RANGED_VALUE -->
+            <Complication type="RANGED_VALUE">
+                <PartDraw x="0" y="0" width="78" height="78" alpha="255">
+                    <Variant mode="AMBIENT" target="alpha" value="0" />
+                    <RoundRectangle x="4" y="4" width="70" height="70" cornerRadiusX="35" cornerRadiusY="35">
+                        <Fill color="#18FFFFFF" />
+                    </RoundRectangle>
+                    <Arc centerX="39" centerY="39" width="62" height="62" startAngle="215" endAngle="505">
+                        <Stroke cap="ROUND" color="#26FFFFFF" thickness="7" />
+                    </Arc>
+                    <Arc centerX="39" centerY="39" width="62" height="62" startAngle="215" endAngle="215">
+                        <Transform target="endAngle" value="215 + 290 * clamp(([COMPLICATION.RANGED_VALUE_VALUE] - [COMPLICATION.RANGED_VALUE_MIN]) / ([COMPLICATION.RANGED_VALUE_MAX] - [COMPLICATION.RANGED_VALUE_MIN]), 0, 1)" />
+                        <Stroke cap="ROUND" color="[CONFIGURATION.themeColor.0]" thickness="7" />
+                    </Arc>
+                </PartDraw>
+                <PartDraw x="0" y="0" width="78" height="78" alpha="0">
+                    <Variant mode="AMBIENT" target="alpha" value="255" />
+                    <Arc centerX="39" centerY="39" width="62" height="62" startAngle="215" endAngle="505">
+                        <Stroke cap="ROUND" color="#26FFFFFF" thickness="7" />
+                    </Arc>
+                    <Arc centerX="39" centerY="39" width="62" height="62" startAngle="215" endAngle="215">
+                        <Transform target="endAngle" value="215 + 290 * clamp(([COMPLICATION.RANGED_VALUE_VALUE] - [COMPLICATION.RANGED_VALUE_MIN]) / ([COMPLICATION.RANGED_VALUE_MAX] - [COMPLICATION.RANGED_VALUE_MIN]), 0, 1)" />
+                        <Stroke cap="ROUND" color="#FFFFFFFF" thickness="7" />
+                    </Arc>
+                </PartDraw>
+                <PartText x="0" y="17" width="78" height="30">
+                    <Text align="CENTER">
+                        <Font size="18" color="#FFFFFFFF" family="google_sans_bold">
+                            <Template><![CDATA[%s]]><Parameter expression="[COMPLICATION.TEXT]" /></Template>
+                        </Font>
+                    </Text>
+                </PartText>
+                <PartImage x="31" y="52" width="16" height="16" alpha="255">
+                    <Variant mode="AMBIENT" target="alpha" value="0" />
+                    <Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]" />
+                    <ColorFilter colors="[CONFIGURATION.themeColor.0]" />
+                </PartImage>
+                <PartImage x="31" y="52" width="16" height="16" alpha="0">
+                    <Variant mode="AMBIENT" target="alpha" value="255" />
+                    <Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]" />
+                    <ColorFilter colors="#FFFFFFFF" />
+                </PartImage>
+            </Complication>
+
+            <!-- SHORT_TEXT -->
+            <Complication type="SHORT_TEXT">
+                <PartDraw x="0" y="0" width="78" height="78" alpha="255">
+                    <Variant mode="AMBIENT" target="alpha" value="0" />
+                    <RoundRectangle x="4" y="4" width="70" height="70" cornerRadiusX="35" cornerRadiusY="35">
+                        <Fill color="#18FFFFFF" />
+                    </RoundRectangle>
+                </PartDraw>
+                <PartText x="0" y="11" width="78" height="18" alpha="255">
+                    <Variant mode="AMBIENT" target="alpha" value="0" />
+                    <Text align="CENTER">
+                        <Font size="12" color="[CONFIGURATION.themeColor.0]" family="google_sans_bold">
+                            <Template><![CDATA[%s]]><Parameter expression="[COMPLICATION.TITLE]" /></Template>
+                        </Font>
+                    </Text>
+                </PartText>
+                <PartText x="0" y="11" width="78" height="18" alpha="0">
+                    <Variant mode="AMBIENT" target="alpha" value="255" />
+                    <Text align="CENTER">
+                        <Font size="12" color="#FFE0E0E0" family="google_sans_bold">
+                            <Template><![CDATA[%s]]><Parameter expression="[COMPLICATION.TITLE]" /></Template>
+                        </Font>
+                    </Text>
+                </PartText>
+                <PartText x="0" y="28" width="78" height="26">
+                    <Text align="CENTER">
+                        <Font size="17" color="#FFFFFFFF" family="google_sans_bold">
+                            <Template><![CDATA[%s]]><Parameter expression="[COMPLICATION.TEXT]" /></Template>
+                        </Font>
+                    </Text>
+                </PartText>
+                <PartImage x="31" y="51" width="16" height="16" alpha="255">
+                    <Variant mode="AMBIENT" target="alpha" value="0" />
+                    <Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]" />
+                    <ColorFilter colors="[CONFIGURATION.themeColor.0]" />
+                </PartImage>
+                <PartImage x="31" y="51" width="16" height="16" alpha="0">
+                    <Variant mode="AMBIENT" target="alpha" value="255" />
+                    <Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]" />
+                    <ColorFilter colors="#FFFFFFFF" />
+                </PartImage>
+            </Complication>
+
+            <!-- SMALL_IMAGE -->
+            <Complication type="SMALL_IMAGE">
+                <PartDraw x="0" y="0" width="78" height="78" alpha="255">
+                    <Variant mode="AMBIENT" target="alpha" value="0" />
+                    <RoundRectangle x="4" y="4" width="70" height="70" cornerRadiusX="35" cornerRadiusY="35">
+                        <Fill color="#18FFFFFF" />
+                    </RoundRectangle>
+                </PartDraw>
+                <PartImage x="19" y="19" width="40" height="40">
+                    <Image resource="[COMPLICATION.SMALL_IMAGE]" />
+                </PartImage>
+            </Complication>
+
+            <!-- EMPTY -->
+            <Complication type="EMPTY">
+                <PartDraw x="0" y="0" width="78" height="78">
+                    <RoundRectangle x="4" y="4" width="70" height="70" cornerRadiusX="35" cornerRadiusY="35">
+                        <Fill color="#0DFFFFFF" />
+                    </RoundRectangle>
+                </PartDraw>
+            </Complication>
+        </ComplicationSlot>
+
+        <!-- Complication Slot 2: Top Right (45 deg, Reduced PCD = 276, Zero Overlap with Hands) -->
+        <ComplicationSlot
+            slotId="2"
+            x="284"
+            y="88"
+            width="78"
+            height="78"
+            supportedTypes="RANGED_VALUE SHORT_TEXT SMALL_IMAGE EMPTY">
+            <BoundingOval x="0" y="0" width="78" height="78" />
+            <DefaultProviderPolicy defaultSystemProvider="DATE" defaultSystemProviderType="SHORT_TEXT" />
+
+            <Complication type="RANGED_VALUE">
+                <PartDraw x="0" y="0" width="78" height="78" alpha="255">
+                    <Variant mode="AMBIENT" target="alpha" value="0" />
+                    <RoundRectangle x="4" y="4" width="70" height="70" cornerRadiusX="35" cornerRadiusY="35">
+                        <Fill color="#18FFFFFF" />
+                    </RoundRectangle>
+                    <Arc centerX="39" centerY="39" width="62" height="62" startAngle="215" endAngle="505">
+                        <Stroke cap="ROUND" color="#26FFFFFF" thickness="7" />
+                    </Arc>
+                    <Arc centerX="39" centerY="39" width="62" height="62" startAngle="215" endAngle="215">
+                        <Transform target="endAngle" value="215 + 290 * clamp(([COMPLICATION.RANGED_VALUE_VALUE] - [COMPLICATION.RANGED_VALUE_MIN]) / ([COMPLICATION.RANGED_VALUE_MAX] - [COMPLICATION.RANGED_VALUE_MIN]), 0, 1)" />
+                        <Stroke cap="ROUND" color="[CONFIGURATION.themeColor.0]" thickness="7" />
+                    </Arc>
+                </PartDraw>
+                <PartDraw x="0" y="0" width="78" height="78" alpha="0">
+                    <Variant mode="AMBIENT" target="alpha" value="255" />
+                    <Arc centerX="39" centerY="39" width="62" height="62" startAngle="215" endAngle="505">
+                        <Stroke cap="ROUND" color="#26FFFFFF" thickness="7" />
+                    </Arc>
+                    <Arc centerX="39" centerY="39" width="62" height="62" startAngle="215" endAngle="215">
+                        <Transform target="endAngle" value="215 + 290 * clamp(([COMPLICATION.RANGED_VALUE_VALUE] - [COMPLICATION.RANGED_VALUE_MIN]) / ([COMPLICATION.RANGED_VALUE_MAX] - [COMPLICATION.RANGED_VALUE_MIN]), 0, 1)" />
+                        <Stroke cap="ROUND" color="#FFFFFFFF" thickness="7" />
+                    </Arc>
+                </PartDraw>
+                <PartText x="0" y="17" width="78" height="30">
+                    <Text align="CENTER">
+                        <Font size="18" color="#FFFFFFFF" family="google_sans_bold">
+                            <Template><![CDATA[%s]]><Parameter expression="[COMPLICATION.TEXT]" /></Template>
+                        </Font>
+                    </Text>
+                </PartText>
+                <PartImage x="31" y="52" width="16" height="16" alpha="255">
+                    <Variant mode="AMBIENT" target="alpha" value="0" />
+                    <Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]" />
+                    <ColorFilter colors="[CONFIGURATION.themeColor.0]" />
+                </PartImage>
+                <PartImage x="31" y="52" width="16" height="16" alpha="0">
+                    <Variant mode="AMBIENT" target="alpha" value="255" />
+                    <Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]" />
+                    <ColorFilter colors="#FFFFFFFF" />
+                </PartImage>
+            </Complication>
+
+            <Complication type="SHORT_TEXT">
+                <PartDraw x="0" y="0" width="78" height="78" alpha="255">
+                    <Variant mode="AMBIENT" target="alpha" value="0" />
+                    <RoundRectangle x="4" y="4" width="70" height="70" cornerRadiusX="35" cornerRadiusY="35">
+                        <Fill color="#18FFFFFF" />
+                    </RoundRectangle>
+                </PartDraw>
+                <PartText x="0" y="11" width="78" height="18" alpha="255">
+                    <Variant mode="AMBIENT" target="alpha" value="0" />
+                    <Text align="CENTER">
+                        <Font size="12" color="[CONFIGURATION.themeColor.0]" family="google_sans_bold">
+                            <Template><![CDATA[%s]]><Parameter expression="[COMPLICATION.TITLE]" /></Template>
+                        </Font>
+                    </Text>
+                </PartText>
+                <PartText x="0" y="11" width="78" height="18" alpha="0">
+                    <Variant mode="AMBIENT" target="alpha" value="255" />
+                    <Text align="CENTER">
+                        <Font size="12" color="#FFE0E0E0" family="google_sans_bold">
+                            <Template><![CDATA[%s]]><Parameter expression="[COMPLICATION.TITLE]" /></Template>
+                        </Font>
+                    </Text>
+                </PartText>
+                <PartText x="0" y="28" width="78" height="26">
+                    <Text align="CENTER">
+                        <Font size="17" color="#FFFFFFFF" family="google_sans_bold">
+                            <Template><![CDATA[%s]]><Parameter expression="[COMPLICATION.TEXT]" /></Template>
+                        </Font>
+                    </Text>
+                </PartText>
+                <PartImage x="31" y="51" width="16" height="16" alpha="255">
+                    <Variant mode="AMBIENT" target="alpha" value="0" />
+                    <Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]" />
+                    <ColorFilter colors="[CONFIGURATION.themeColor.0]" />
+                </PartImage>
+                <PartImage x="31" y="51" width="16" height="16" alpha="0">
+                    <Variant mode="AMBIENT" target="alpha" value="255" />
+                    <Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]" />
+                    <ColorFilter colors="#FFFFFFFF" />
+                </PartImage>
+            </Complication>
+
+            <Complication type="SMALL_IMAGE">
+                <PartDraw x="0" y="0" width="78" height="78" alpha="255">
+                    <Variant mode="AMBIENT" target="alpha" value="0" />
+                    <RoundRectangle x="4" y="4" width="70" height="70" cornerRadiusX="35" cornerRadiusY="35">
+                        <Fill color="#18FFFFFF" />
+                    </RoundRectangle>
+                </PartDraw>
+                <PartImage x="19" y="19" width="40" height="40">
+                    <Image resource="[COMPLICATION.SMALL_IMAGE]" />
+                </PartImage>
+            </Complication>
+
+            <Complication type="EMPTY">
+                <PartDraw x="0" y="0" width="78" height="78">
+                    <RoundRectangle x="4" y="4" width="70" height="70" cornerRadiusX="35" cornerRadiusY="35">
+                        <Fill color="#0DFFFFFF" />
+                    </RoundRectangle>
+                </PartDraw>
+            </Complication>
+        </ComplicationSlot>
+
+        <!-- Complication Slot 3: Bottom Left (45 deg, Reduced PCD = 276, Zero Overlap with Hands) -->
+        <ComplicationSlot
+            slotId="3"
+            x="88"
+            y="284"
+            width="78"
+            height="78"
+            supportedTypes="RANGED_VALUE SHORT_TEXT SMALL_IMAGE EMPTY">
+            <BoundingOval x="0" y="0" width="78" height="78" />
+            <DefaultProviderPolicy defaultSystemProvider="STEP_COUNT" defaultSystemProviderType="RANGED_VALUE" />
+
+            <Complication type="RANGED_VALUE">
+                <PartDraw x="0" y="0" width="78" height="78" alpha="255">
+                    <Variant mode="AMBIENT" target="alpha" value="0" />
+                    <RoundRectangle x="4" y="4" width="70" height="70" cornerRadiusX="35" cornerRadiusY="35">
+                        <Fill color="#18FFFFFF" />
+                    </RoundRectangle>
+                    <Arc centerX="39" centerY="39" width="62" height="62" startAngle="215" endAngle="505">
+                        <Stroke cap="ROUND" color="#26FFFFFF" thickness="7" />
+                    </Arc>
+                    <Arc centerX="39" centerY="39" width="62" height="62" startAngle="215" endAngle="215">
+                        <Transform target="endAngle" value="215 + 290 * clamp(([COMPLICATION.RANGED_VALUE_VALUE] - [COMPLICATION.RANGED_VALUE_MIN]) / ([COMPLICATION.RANGED_VALUE_MAX] - [COMPLICATION.RANGED_VALUE_MIN]), 0, 1)" />
+                        <Stroke cap="ROUND" color="[CONFIGURATION.themeColor.0]" thickness="7" />
+                    </Arc>
+                </PartDraw>
+                <PartDraw x="0" y="0" width="78" height="78" alpha="0">
+                    <Variant mode="AMBIENT" target="alpha" value="255" />
+                    <Arc centerX="39" centerY="39" width="62" height="62" startAngle="215" endAngle="505">
+                        <Stroke cap="ROUND" color="#26FFFFFF" thickness="7" />
+                    </Arc>
+                    <Arc centerX="39" centerY="39" width="62" height="62" startAngle="215" endAngle="215">
+                        <Transform target="endAngle" value="215 + 290 * clamp(([COMPLICATION.RANGED_VALUE_VALUE] - [COMPLICATION.RANGED_VALUE_MIN]) / ([COMPLICATION.RANGED_VALUE_MAX] - [COMPLICATION.RANGED_VALUE_MIN]), 0, 1)" />
+                        <Stroke cap="ROUND" color="#FFFFFFFF" thickness="7" />
+                    </Arc>
+                </PartDraw>
+                <PartText x="0" y="17" width="78" height="30">
+                    <Text align="CENTER">
+                        <Font size="18" color="#FFFFFFFF" family="google_sans_bold">
+                            <Template><![CDATA[%s]]><Parameter expression="[COMPLICATION.TEXT]" /></Template>
+                        </Font>
+                    </Text>
+                </PartText>
+                <PartImage x="31" y="52" width="16" height="16" alpha="255">
+                    <Variant mode="AMBIENT" target="alpha" value="0" />
+                    <Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]" />
+                    <ColorFilter colors="[CONFIGURATION.themeColor.0]" />
+                </PartImage>
+                <PartImage x="31" y="52" width="16" height="16" alpha="0">
+                    <Variant mode="AMBIENT" target="alpha" value="255" />
+                    <Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]" />
+                    <ColorFilter colors="#FFFFFFFF" />
+                </PartImage>
+            </Complication>
+
+            <Complication type="SHORT_TEXT">
+                <PartDraw x="0" y="0" width="78" height="78" alpha="255">
+                    <Variant mode="AMBIENT" target="alpha" value="0" />
+                    <RoundRectangle x="4" y="4" width="70" height="70" cornerRadiusX="35" cornerRadiusY="35">
+                        <Fill color="#18FFFFFF" />
+                    </RoundRectangle>
+                </PartDraw>
+                <PartText x="0" y="11" width="78" height="18" alpha="255">
+                    <Variant mode="AMBIENT" target="alpha" value="0" />
+                    <Text align="CENTER">
+                        <Font size="12" color="[CONFIGURATION.themeColor.0]" family="google_sans_bold">
+                            <Template><![CDATA[%s]]><Parameter expression="[COMPLICATION.TITLE]" /></Template>
+                        </Font>
+                    </Text>
+                </PartText>
+                <PartText x="0" y="11" width="78" height="18" alpha="0">
+                    <Variant mode="AMBIENT" target="alpha" value="255" />
+                    <Text align="CENTER">
+                        <Font size="12" color="#FFE0E0E0" family="google_sans_bold">
+                            <Template><![CDATA[%s]]><Parameter expression="[COMPLICATION.TITLE]" /></Template>
+                        </Font>
+                    </Text>
+                </PartText>
+                <PartText x="0" y="28" width="78" height="26">
+                    <Text align="CENTER">
+                        <Font size="17" color="#FFFFFFFF" family="google_sans_bold">
+                            <Template><![CDATA[%s]]><Parameter expression="[COMPLICATION.TEXT]" /></Template>
+                        </Font>
+                    </Text>
+                </PartText>
+                <PartImage x="31" y="51" width="16" height="16" alpha="255">
+                    <Variant mode="AMBIENT" target="alpha" value="0" />
+                    <Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]" />
+                    <ColorFilter colors="[CONFIGURATION.themeColor.0]" />
+                </PartImage>
+                <PartImage x="31" y="51" width="16" height="16" alpha="0">
+                    <Variant mode="AMBIENT" target="alpha" value="255" />
+                    <Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]" />
+                    <ColorFilter colors="#FFFFFFFF" />
+                </PartImage>
+            </Complication>
+
+            <Complication type="SMALL_IMAGE">
+                <PartDraw x="0" y="0" width="78" height="78" alpha="255">
+                    <Variant mode="AMBIENT" target="alpha" value="0" />
+                    <RoundRectangle x="4" y="4" width="70" height="70" cornerRadiusX="35" cornerRadiusY="35">
+                        <Fill color="#18FFFFFF" />
+                    </RoundRectangle>
+                </PartDraw>
+                <PartImage x="19" y="19" width="40" height="40">
+                    <Image resource="[COMPLICATION.SMALL_IMAGE]" />
+                </PartImage>
+            </Complication>
+
+            <Complication type="EMPTY">
+                <PartDraw x="0" y="0" width="78" height="78">
+                    <RoundRectangle x="4" y="4" width="70" height="70" cornerRadiusX="35" cornerRadiusY="35">
+                        <Fill color="#0DFFFFFF" />
+                    </RoundRectangle>
+                </PartDraw>
+            </Complication>
+        </ComplicationSlot>
+
+        <!-- Complication Slot 4: Bottom Right (45 deg, Reduced PCD = 276, Zero Overlap with Hands) -->
+        <ComplicationSlot
+            slotId="4"
+            x="284"
+            y="284"
+            width="78"
+            height="78"
+            supportedTypes="RANGED_VALUE SHORT_TEXT SMALL_IMAGE EMPTY">
+            <BoundingOval x="0" y="0" width="78" height="78" />
+            <DefaultProviderPolicy defaultSystemProvider="DAY_OF_WEEK" defaultSystemProviderType="SHORT_TEXT" />
+
+            <Complication type="RANGED_VALUE">
+                <PartDraw x="0" y="0" width="78" height="78" alpha="255">
+                    <Variant mode="AMBIENT" target="alpha" value="0" />
+                    <RoundRectangle x="4" y="4" width="70" height="70" cornerRadiusX="35" cornerRadiusY="35">
+                        <Fill color="#18FFFFFF" />
+                    </RoundRectangle>
+                    <Arc centerX="39" centerY="39" width="62" height="62" startAngle="215" endAngle="505">
+                        <Stroke cap="ROUND" color="#26FFFFFF" thickness="7" />
+                    </Arc>
+                    <Arc centerX="39" centerY="39" width="62" height="62" startAngle="215" endAngle="215">
+                        <Transform target="endAngle" value="215 + 290 * clamp(([COMPLICATION.RANGED_VALUE_VALUE] - [COMPLICATION.RANGED_VALUE_MIN]) / ([COMPLICATION.RANGED_VALUE_MAX] - [COMPLICATION.RANGED_VALUE_MIN]), 0, 1)" />
+                        <Stroke cap="ROUND" color="[CONFIGURATION.themeColor.0]" thickness="7" />
+                    </Arc>
+                </PartDraw>
+                <PartDraw x="0" y="0" width="78" height="78" alpha="0">
+                    <Variant mode="AMBIENT" target="alpha" value="255" />
+                    <Arc centerX="39" centerY="39" width="62" height="62" startAngle="215" endAngle="505">
+                        <Stroke cap="ROUND" color="#26FFFFFF" thickness="7" />
+                    </Arc>
+                    <Arc centerX="39" centerY="39" width="62" height="62" startAngle="215" endAngle="215">
+                        <Transform target="endAngle" value="215 + 290 * clamp(([COMPLICATION.RANGED_VALUE_VALUE] - [COMPLICATION.RANGED_VALUE_MIN]) / ([COMPLICATION.RANGED_VALUE_MAX] - [COMPLICATION.RANGED_VALUE_MIN]), 0, 1)" />
+                        <Stroke cap="ROUND" color="#FFFFFFFF" thickness="7" />
+                    </Arc>
+                </PartDraw>
+                <PartText x="0" y="17" width="78" height="30">
+                    <Text align="CENTER">
+                        <Font size="18" color="#FFFFFFFF" family="google_sans_bold">
+                            <Template><![CDATA[%s]]><Parameter expression="[COMPLICATION.TEXT]" /></Template>
+                        </Font>
+                    </Text>
+                </PartText>
+                <PartImage x="31" y="52" width="16" height="16" alpha="255">
+                    <Variant mode="AMBIENT" target="alpha" value="0" />
+                    <Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]" />
+                    <ColorFilter colors="[CONFIGURATION.themeColor.0]" />
+                </PartImage>
+                <PartImage x="31" y="52" width="16" height="16" alpha="0">
+                    <Variant mode="AMBIENT" target="alpha" value="255" />
+                    <Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]" />
+                    <ColorFilter colors="#FFFFFFFF" />
+                </PartImage>
+            </Complication>
+
+            <Complication type="SHORT_TEXT">
+                <PartDraw x="0" y="0" width="78" height="78" alpha="255">
+                    <Variant mode="AMBIENT" target="alpha" value="0" />
+                    <RoundRectangle x="4" y="4" width="70" height="70" cornerRadiusX="35" cornerRadiusY="35">
+                        <Fill color="#18FFFFFF" />
+                    </RoundRectangle>
+                </PartDraw>
+                <PartText x="0" y="11" width="78" height="18" alpha="255">
+                    <Variant mode="AMBIENT" target="alpha" value="0" />
+                    <Text align="CENTER">
+                        <Font size="12" color="[CONFIGURATION.themeColor.0]" family="google_sans_bold">
+                            <Template><![CDATA[%s]]><Parameter expression="[COMPLICATION.TITLE]" /></Template>
+                        </Font>
+                    </Text>
+                </PartText>
+                <PartText x="0" y="11" width="78" height="18" alpha="0">
+                    <Variant mode="AMBIENT" target="alpha" value="255" />
+                    <Text align="CENTER">
+                        <Font size="12" color="#FFE0E0E0" family="google_sans_bold">
+                            <Template><![CDATA[%s]]><Parameter expression="[COMPLICATION.TITLE]" /></Template>
+                        </Font>
+                    </Text>
+                </PartText>
+                <PartText x="0" y="28" width="78" height="26">
+                    <Text align="CENTER">
+                        <Font size="17" color="#FFFFFFFF" family="google_sans_bold">
+                            <Template><![CDATA[%s]]><Parameter expression="[COMPLICATION.TEXT]" /></Template>
+                        </Font>
+                    </Text>
+                </PartText>
+                <PartImage x="31" y="51" width="16" height="16" alpha="255">
+                    <Variant mode="AMBIENT" target="alpha" value="0" />
+                    <Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]" />
+                    <ColorFilter colors="[CONFIGURATION.themeColor.0]" />
+                </PartImage>
+                <PartImage x="31" y="51" width="16" height="16" alpha="0">
+                    <Variant mode="AMBIENT" target="alpha" value="255" />
+                    <Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]" />
+                    <ColorFilter colors="#FFFFFFFF" />
+                </PartImage>
+            </Complication>
+
+            <Complication type="SMALL_IMAGE">
+                <PartDraw x="0" y="0" width="78" height="78" alpha="255">
+                    <Variant mode="AMBIENT" target="alpha" value="0" />
+                    <RoundRectangle x="4" y="4" width="70" height="70" cornerRadiusX="35" cornerRadiusY="35">
+                        <Fill color="#18FFFFFF" />
+                    </RoundRectangle>
+                </PartDraw>
+                <PartImage x="19" y="19" width="40" height="40">
+                    <Image resource="[COMPLICATION.SMALL_IMAGE]" />
+                </PartImage>
+            </Complication>
+
+            <Complication type="EMPTY">
+                <PartDraw x="0" y="0" width="78" height="78">
+                    <RoundRectangle x="4" y="4" width="70" height="70" cornerRadiusX="35" cornerRadiusY="35">
+                        <Fill color="#0DFFFFFF" />
+                    </RoundRectangle>
+                </PartDraw>
+            </Complication>
+        </ComplicationSlot>
+
+        <!-- Digital Clock: Centered at PCD center (cy = 225) with Large Font 76 -->
+        <DigitalClock x="96" y="182" width="216" height="86" alpha="255">
+            <Variant mode="AMBIENT" target="alpha" value="0" />
+            <TimeText x="0" y="0" width="216" height="86" format="hh:mm" hourFormat="12" align="CENTER">
+                <Font family="google_sans_bold" size="76" color="[CONFIGURATION.themeColor.0]" />
+            </TimeText>
+        </DigitalClock>
+
+        <!-- Digital Clock: Ambient (Centered at cy = 225, Pure White) -->
+        <DigitalClock x="96" y="182" width="216" height="86" alpha="0">
+            <Variant mode="AMBIENT" target="alpha" value="255" />
+            <TimeText x="0" y="0" width="216" height="86" format="hh:mm" hourFormat="12" align="CENTER">
+                <Font family="google_sans_bold" size="76" color="#FFFFFFFF" />
+            </TimeText>
+        </DigitalClock>
+
+        <!-- AM/PM Indicator: Interactive (Right-Docked, Bottom-Aligned) -->
+        <Condition>
+            <Expressions>
+                <Expression name="is_pm">[HOUR_0_23] &gt;= 12</Expression>
+            </Expressions>
+            <Compare expression="is_pm">
+                <PartText x="320" y="220" width="45" height="34" alpha="255">
+                    <Variant mode="AMBIENT" target="alpha" value="0" />
+                    <Text align="LEFT">
+                        <Font family="google_sans_bold" size="24" color="[CONFIGURATION.themeColor.1]">
+                            <Template>PM</Template>
+                        </Font>
+                    </Text>
+                </PartText>
+            </Compare>
+            <Default>
+                <PartText x="320" y="220" width="45" height="34" alpha="255">
+                    <Variant mode="AMBIENT" target="alpha" value="0" />
+                    <Text align="LEFT">
+                        <Font family="google_sans_bold" size="24" color="[CONFIGURATION.themeColor.1]">
+                            <Template>AM</Template>
+                        </Font>
+                    </Text>
+                </PartText>
+            </Default>
+        </Condition>
+
+        <!-- AM/PM Indicator: Ambient (Right-Docked, Bottom-Aligned) -->
+        <Condition>
+            <Expressions>
+                <Expression name="is_pm">[HOUR_0_23] &gt;= 12</Expression>
+            </Expressions>
+            <Compare expression="is_pm">
+                <PartText x="320" y="220" width="45" height="34" alpha="0">
+                    <Variant mode="AMBIENT" target="alpha" value="255" />
+                    <Text align="LEFT">
+                        <Font family="google_sans_bold" size="24" color="#FFE0E0E0">
+                            <Template>PM</Template>
+                        </Font>
+                    </Text>
+                </PartText>
+            </Compare>
+            <Default>
+                <PartText x="320" y="220" width="45" height="34" alpha="0">
+                    <Variant mode="AMBIENT" target="alpha" value="255" />
+                    <Text align="LEFT">
+                        <Font family="google_sans_bold" size="24" color="#FFE0E0E0">
+                            <Template>AM</Template>
+                        </Font>
+                    </Text>
+                </PartText>
+            </Default>
+        </Condition>
+
+        <!-- ACTIVE DISPLAY: Centered Character Animation (Moved Below, x=169, y=266, 112x112) -->
+        <Group x="169" y="266" width="112" height="112" alpha="255">
+            <Variant mode="AMBIENT" target="alpha" value="0" />
+
+            <Condition>
+                <Expressions>
+                    <Expression name="is_mickey">[CONFIGURATION.character] == 0</Expression>
+                    <Expression name="is_doraemon">[CONFIGURATION.character] == 1</Expression>
+                    <Expression name="is_shinchan">[CONFIGURATION.character] == 2</Expression>
+                    <Expression name="is_pikachu">[CONFIGURATION.character] == 3</Expression>
+                    <Expression name="is_goku">[CONFIGURATION.character] == 4</Expression>
+                </Expressions>
+
+                <!-- 1. Mickey Mouse (10 frames) -->
+                <Compare expression="is_mickey">
+                    <PartAnimatedImage x="0" y="0" width="112" height="112">
+                        <AnimationController play="ON_VISIBLE" repeat="TRUE" />
+                        <SequenceImages frameRate="10">
+                            <Image resource="mickey_walk_0" />
+                            <Image resource="mickey_walk_1" />
+                            <Image resource="mickey_walk_2" />
+                            <Image resource="mickey_walk_3" />
+                            <Image resource="mickey_walk_4" />
+                            <Image resource="mickey_walk_5" />
+                            <Image resource="mickey_walk_6" />
+                            <Image resource="mickey_walk_7" />
+                            <Image resource="mickey_walk_8" />
+                            <Image resource="mickey_walk_9" />
+                        </SequenceImages>
+                        <Thumbnail resource="mickey_walk_0" />
+                    </PartAnimatedImage>
+                </Compare>
+
+                <!-- 2. Doraemon (8 frames) -->
+                <Compare expression="is_doraemon">
+                    <PartAnimatedImage x="0" y="0" width="112" height="112">
+                        <AnimationController play="ON_VISIBLE" repeat="TRUE" />
+                        <SequenceImages frameRate="8">
+                            <Image resource="doraemon_walk_0" />
+                            <Image resource="doraemon_walk_1" />
+                            <Image resource="doraemon_walk_2" />
+                            <Image resource="doraemon_walk_3" />
+                            <Image resource="doraemon_walk_4" />
+                            <Image resource="doraemon_walk_5" />
+                            <Image resource="doraemon_walk_6" />
+                            <Image resource="doraemon_walk_7" />
+                        </SequenceImages>
+                        <Thumbnail resource="doraemon_walk_0" />
+                    </PartAnimatedImage>
+                </Compare>
+
+                <!-- 3. Shin-chan (7 frames) -->
+                <Compare expression="is_shinchan">
+                    <PartAnimatedImage x="0" y="0" width="112" height="112">
+                        <AnimationController play="ON_VISIBLE" repeat="TRUE" />
+                        <SequenceImages frameRate="7">
+                            <Image resource="shinchan_walk_0" />
+                            <Image resource="shinchan_walk_1" />
+                            <Image resource="shinchan_walk_2" />
+                            <Image resource="shinchan_walk_3" />
+                            <Image resource="shinchan_walk_4" />
+                            <Image resource="shinchan_walk_5" />
+                            <Image resource="shinchan_walk_6" />
+                        </SequenceImages>
+                        <Thumbnail resource="shinchan_walk_0" />
+                    </PartAnimatedImage>
+                </Compare>
+
+                <!-- 4. Pikachu (4 frames) -->
+                <Compare expression="is_pikachu">
+                    <PartAnimatedImage x="0" y="0" width="112" height="112">
+                        <AnimationController play="ON_VISIBLE" repeat="TRUE" />
+                        <SequenceImages frameRate="6">
+                            <Image resource="pikachu_walk_0" />
+                            <Image resource="pikachu_walk_1" />
+                            <Image resource="pikachu_walk_2" />
+                            <Image resource="pikachu_walk_3" />
+                        </SequenceImages>
+                        <Thumbnail resource="pikachu_walk_0" />
+                    </PartAnimatedImage>
+                </Compare>
+
+                <!-- 5. Goku (6 frames) -->
+                <Compare expression="is_goku">
+                    <PartAnimatedImage x="0" y="0" width="112" height="112">
+                        <AnimationController play="ON_VISIBLE" repeat="TRUE" />
+                        <SequenceImages frameRate="8">
+                            <Image resource="goku_walk_0" />
+                            <Image resource="goku_walk_1" />
+                            <Image resource="goku_walk_2" />
+                            <Image resource="goku_walk_3" />
+                            <Image resource="goku_walk_4" />
+                            <Image resource="goku_walk_5" />
+                        </SequenceImages>
+                        <Thumbnail resource="goku_walk_0" />
+                    </PartAnimatedImage>
+                </Compare>
+
+                <!-- 6. Oggy (18 frames, Default) -->
+                <Default>
+                    <PartAnimatedImage x="0" y="0" width="112" height="112">
+                        <AnimationController play="ON_VISIBLE" repeat="TRUE" />
+                        <SequenceImages frameRate="10">
+                            <Image resource="oggy_walk_0" />
+                            <Image resource="oggy_walk_1" />
+                            <Image resource="oggy_walk_2" />
+                            <Image resource="oggy_walk_3" />
+                            <Image resource="oggy_walk_4" />
+                            <Image resource="oggy_walk_5" />
+                            <Image resource="oggy_walk_6" />
+                            <Image resource="oggy_walk_7" />
+                            <Image resource="oggy_walk_8" />
+                            <Image resource="oggy_walk_9" />
+                            <Image resource="oggy_walk_10" />
+                            <Image resource="oggy_walk_11" />
+                            <Image resource="oggy_walk_12" />
+                            <Image resource="oggy_walk_13" />
+                            <Image resource="oggy_walk_14" />
+                            <Image resource="oggy_walk_15" />
+                            <Image resource="oggy_walk_16" />
+                            <Image resource="oggy_walk_17" />
+                        </SequenceImages>
+                        <Thumbnail resource="oggy_walk_0" />
+                    </PartAnimatedImage>
+                </Default>
+            </Condition>
+        </Group>
+
+        <!-- AOD DISPLAY: Character Outline Still Image (Moved Below, x=169, y=266, 112x112) -->
+        <Group x="169" y="266" width="112" height="112" alpha="0">
+            <Variant mode="AMBIENT" target="alpha" value="255" />
+
+            <Condition>
+                <Expressions>
+                    <Expression name="is_mickey">[CONFIGURATION.character] == 0</Expression>
+                    <Expression name="is_doraemon">[CONFIGURATION.character] == 1</Expression>
+                    <Expression name="is_shinchan">[CONFIGURATION.character] == 2</Expression>
+                    <Expression name="is_pikachu">[CONFIGURATION.character] == 3</Expression>
+                    <Expression name="is_goku">[CONFIGURATION.character] == 4</Expression>
+                </Expressions>
+
+                <!-- 1. Mickey Mouse Outline -->
+                <Compare expression="is_mickey">
+                    <PartImage x="0" y="0" width="112" height="112">
+                        <Image resource="mickey_aod" />
+                    </PartImage>
+                </Compare>
+
+                <!-- 2. Doraemon Outline -->
+                <Compare expression="is_doraemon">
+                    <PartImage x="0" y="0" width="112" height="112">
+                        <Image resource="doraemon_aod" />
+                    </PartImage>
+                </Compare>
+
+                <!-- 3. Shin-chan Outline -->
+                <Compare expression="is_shinchan">
+                    <PartImage x="0" y="0" width="112" height="112">
+                        <Image resource="shinchan_aod" />
+                    </PartImage>
+                </Compare>
+
+                <!-- 4. Pikachu Outline -->
+                <Compare expression="is_pikachu">
+                    <PartImage x="0" y="0" width="112" height="112">
+                        <Image resource="pikachu_aod" />
+                    </PartImage>
+                </Compare>
+
+                <!-- 5. Goku Outline -->
+                <Compare expression="is_goku">
+                    <PartImage x="0" y="0" width="112" height="112">
+                        <Image resource="goku_aod" />
+                    </PartImage>
+                </Compare>
+
+                <!-- 6. Oggy Outline (Default) -->
+                <Default>
+                    <PartImage x="0" y="0" width="112" height="112">
+                        <Image resource="oggy_aod" />
+                    </PartImage>
+                </Default>
+            </Condition>
+        </Group>
+
+        <!-- Peripheral Minimal Analog Clock Hands (Toggleable Seconds Dot via BooleanConfiguration) -->
+        <BooleanConfiguration id="showSeconds">
+            <BooleanOption id="TRUE">
+                <AnalogClock x="0" y="0" width="450" height="450">
+                    <SecondHand resource="hand_second" x="0" y="0" width="450" height="450" pivotX="0.5" pivotY="0.5" tintColor="[CONFIGURATION.themeColor.0]">
+                        <Variant mode="AMBIENT" target="alpha" value="0" />
+                        <Sweep frequency="15" />
+                    </SecondHand>
+                    <MinuteHand resource="hand_minute" x="0" y="0" width="450" height="450" pivotX="0.5" pivotY="0.5" />
+                    <HourHand resource="hand_hour_body" x="0" y="0" width="450" height="450" pivotX="0.5" pivotY="0.5" tintColor="[CONFIGURATION.themeColor.0]">
+                        <Variant mode="AMBIENT" target="tintColor" value="#FFFFFFFF" />
+                    </HourHand>
+                    <HourHand resource="hand_hour_text" x="0" y="0" width="450" height="450" pivotX="0.5" pivotY="0.5" />
+                </AnalogClock>
+            </BooleanOption>
+            <BooleanOption id="FALSE">
+                <AnalogClock x="0" y="0" width="450" height="450">
+                    <MinuteHand resource="hand_minute" x="0" y="0" width="450" height="450" pivotX="0.5" pivotY="0.5" />
+                    <HourHand resource="hand_hour_body" x="0" y="0" width="450" height="450" pivotX="0.5" pivotY="0.5" tintColor="[CONFIGURATION.themeColor.0]">
+                        <Variant mode="AMBIENT" target="tintColor" value="#FFFFFFFF" />
+                    </HourHand>
+                    <HourHand resource="hand_hour_text" x="0" y="0" width="450" height="450" pivotX="0.5" pivotY="0.5" />
+                </AnalogClock>
+            </BooleanOption>
+        </BooleanConfiguration>
+
+    </Scene>
+</WatchFace>
