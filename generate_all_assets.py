@@ -1,24 +1,48 @@
+from pathlib import Path
 import os, math
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 import numpy as np
 
-res_dir = r'D:\watchface\CartoonWatchFace\app\src\main\res\drawable'
-out_dir = r'D:\watchface\listing_assets'
-art_dir = r'C:\Users\parvs\.gemini\antigravity\brain\e6bdb1ab-a11c-4db8-8305-376866d83e90'
+# Base directories relative to script location
+REPO_ROOT = Path(__file__).resolve().parent
+res_dir = str(REPO_ROOT / 'CartoonWatchFace' / 'app' / 'src' / 'main' / 'res' / 'drawable')
+out_dir = str(REPO_ROOT / 'listing_assets')
 
 os.makedirs(out_dir, exist_ok=True)
-os.makedirs(art_dir, exist_ok=True)
 
-# Fonts
-font_title = ImageFont.truetype(r'C:\Windows\Fonts\segoeuib.ttf', 54)
-font_sub = ImageFont.truetype(r'C:\Windows\Fonts\segoeui.ttf', 28)
-font_tag = ImageFont.truetype(r'C:\Windows\Fonts\segoeuib.ttf', 18)
-font_feat = ImageFont.truetype(r'C:\Windows\Fonts\segoeuib.ttf', 22)
-font_comp_val = ImageFont.truetype(r'C:\Windows\Fonts\segoeuib.ttf', 20)
-font_comp_lbl = ImageFont.truetype(r'C:\Windows\Fonts\segoeuib.ttf', 13)
-font_time = ImageFont.truetype(r'C:\Windows\Fonts\segoeuib.ttf', 44)
-font_ampm = ImageFont.truetype(r'C:\Windows\Fonts\segoeuib.ttf', 20)
-font_badge_text = ImageFont.truetype(r'C:\Windows\Fonts\segoeuib.ttf', 20)
+def get_font(size: int, bold: bool = False):
+    """Safely load system font with cross-platform fallbacks."""
+    font_candidates = []
+    if bold:
+        font_candidates = [
+            r'C:\Windows\Fonts\segoeuib.ttf',
+            '/System/Library/Fonts/SFCompact-Bold.otf',
+            '/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf'
+        ]
+    else:
+        font_candidates = [
+            r'C:\Windows\Fonts\segoeui.ttf',
+            '/System/Library/Fonts/SFCompact-Regular.otf',
+            '/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf'
+        ]
+    for p in font_candidates:
+        if os.path.exists(p):
+            try:
+                return ImageFont.truetype(p, size)
+            except Exception:
+                pass
+    return ImageFont.load_default()
+
+# Typography
+font_title = get_font(54, bold=True)
+font_sub = get_font(28)
+font_tag = get_font(18, bold=True)
+font_feat = get_font(22, bold=True)
+font_comp_val = get_font(20, bold=True)
+font_comp_lbl = get_font(13)
+font_time = get_font(44, bold=True)
+font_ampm = get_font(20, bold=True)
+font_badge_text = get_font(20, bold=True)
 
 themes = {
     'amber': (255, 167, 38),
@@ -216,7 +240,6 @@ for char, theme, aod, tag, title, sub, filename in screenshots:
     mock = create_mockup(dial)
     card = create_play_card(mock, tag, title, sub, themes[theme])
     card.save(os.path.join(out_dir, filename))
-    card.save(os.path.join(art_dir, filename))
     print(f'Generated {filename}')
 
 # 2. App Icon (512x512)
@@ -249,7 +272,6 @@ def generate_app_icon():
     icon.alpha_composite(gloss)
     
     icon.save(os.path.join(out_dir, 'icon_512.png'))
-    icon.save(os.path.join(art_dir, 'icon_512.png'))
     print('Generated icon_512.png')
 
 generate_app_icon()
@@ -275,8 +297,8 @@ def generate_feature_graphic():
     draw.text((155, 62), 'WEAR OS WATCH', font=font_tag, fill=(255, 167, 38, 255), anchor='mm')
     
     # Main Title
-    draw.text((60, 100), 'CARTOON', font=ImageFont.truetype(r'C:\Windows\Fonts\segoeuib.ttf', 62), fill=(255, 255, 255, 255))
-    draw.text((60, 168), 'WATCH FACE', font=ImageFont.truetype(r'C:\Windows\Fonts\segoeuib.ttf', 48), fill=(255, 167, 38, 255))
+    draw.text((60, 100), 'CARTOON', font=get_font(62, bold=True), fill=(255, 255, 255, 255))
+    draw.text((60, 168), 'WATCH FACE', font=get_font(48, bold=True), fill=(255, 167, 38, 255))
     
     # Tagline
     draw.text((60, 240), 'Iconic Animated Classics on Your Smartwatch', font=font_sub, fill=(185, 190, 202, 255))
@@ -306,7 +328,6 @@ def generate_feature_graphic():
     fg_rgb.paste(fg, mask=fg.split()[3])
     
     fg_rgb.save(os.path.join(out_dir, 'feature_graphic_1024x500.png'), quality=95)
-    fg_rgb.save(os.path.join(art_dir, 'feature_graphic_1024x500.png'), quality=95)
     print('Generated feature_graphic_1024x500.png')
 
 generate_feature_graphic()
@@ -320,7 +341,7 @@ mipmaps = {
     'mipmap-xxhdpi': 144,
     'mipmap-xxxhdpi': 192
 }
-app_res = r'D:\watchface\CartoonWatchFace\app\src\main\res'
+app_res = str(REPO_ROOT / 'CartoonWatchFace' / 'app' / 'src' / 'main' / 'res')
 for m_dir, sz in mipmaps.items():
     t_dir = os.path.join(app_res, m_dir)
     os.makedirs(t_dir, exist_ok=True)
