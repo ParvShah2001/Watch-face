@@ -1,0 +1,59 @@
+# Built application binaries (allow direct root release artifacts)
+*.apk
+*.aab
+!Cartoon.apk
+!Cartoon.aab
+
+# Gradle caches, metadata, and build directories
+.gradle/
+**/build/
+build/
+.kotlin/
+**/.kotlin/
+*.gradle-daemon-jvm.properties
+gradle-daemon-jvm.properties
+
+# Local machine configuration
+local.properties
+
+# Android Studio & IntelliJ IDEA files
+.idea/
+**/.idea/
+*.iml
+**/*.iml
+.navigation/
+
+# Captures and profiling
+captures/
+**/captures/
+.externalNativeBuild/
+**/.externalNativeBuild/
+.cxx/
+**/.cxx/
+
+# Operating System files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+[Dd]esktop.ini
+
+# Python virtual environment & tooling caches
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+.venv/
+venv/
+env/
+.pytest_cache/
+
+# Java / Crash logs
+*.log
+*.hprof
+hs_err_pid*
+replay_pid*

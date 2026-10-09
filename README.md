@@ -60,7 +60,7 @@ The result is a responsive, AMOLED-optimized watch face that delivers retro nost
 
 - **Specification**: [Watch Face Format (WFF) Version 2](https://developer.android.com/training/wearables/wff)
 - **Target OS**: Wear OS 5+ (Android 14 / `minSdk 34`, `targetSdk 36`)
-- **Build System**: Gradle 9.1 with Android Gradle Plugin (AGP) 9.0.1
+- **Build System**: Gradle 9.8.0 with Android Gradle Plugin (AGP) 9.4.1
 - **Asset Pipeline**: Python 3 (Pillow, NumPy) for mockups and Play Store asset generation
 - **Package ID**: `com.main.cartoon`
 
